@@ -57,6 +57,7 @@ class ObfustringPlugin : Plugin<Project> {
                 key.set(obfustringExtension.key)
                 loggingEnabled.set(obfustringExtension.loggingEnabled)
                 mode.set(obfustringExtension.mode)
+                classNamePrefix.set(obfustringExtension.classNamePrefix)
             }
             if (obfustringExtension.mode.isEnabled()) {
                 setupKotlinCompileOptions(project)

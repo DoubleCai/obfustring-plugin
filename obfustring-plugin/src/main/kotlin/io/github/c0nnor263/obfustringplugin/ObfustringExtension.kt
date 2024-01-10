@@ -49,6 +49,11 @@ abstract class ObfustringExtension {
      */
     var stringConcatStrategy: StringConcatStrategy = StringConcatStrategy.INDY
 
+    /**
+     * Obfuscate string in class which name starts with prefix when mode is [ObfustringMode.DEFAULT]
+     */
+    var classNamePrefix: List<String> = listOf()
+
     companion object {
         const val CONFIGURATION_NAME = "obfustring"
     }

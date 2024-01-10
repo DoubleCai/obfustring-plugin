@@ -23,6 +23,7 @@ import com.android.build.api.instrumentation.InstrumentationParameters
 import io.github.c0nnor263.obfustringcore.ObfustringThis
 import io.github.c0nnor263.obfustringplugin.enums.ObfustringMode
 import io.github.c0nnor263.obfustringplugin.model.ClassVisitorParams
+import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.objectweb.asm.ClassVisitor
@@ -43,11 +44,12 @@ abstract class ObfustringVisitorFactory :
 
     override fun isInstrumentable(classData: ClassData): Boolean {
         val mode = parameters.get().mode.get()
+        val classNamePrefix = parameters.get().classNamePrefix.get()
         return when (mode) {
             ObfustringMode.DEFAULT -> {
                 classData.classAnnotations.any {
                     it == ObfustringThis::class.java.name
-                }
+                } || classNamePrefix.any { classData.className.startsWith(it) }
             }
 
             ObfustringMode.FORCE -> true
@@ -78,5 +80,11 @@ abstract class ObfustringVisitorFactory :
          */
         @get:Input
         val mode: Property<ObfustringMode>
+
+        /**
+         * Class name prefix
+         */
+        @get:Input
+        val classNamePrefix: ListProperty<String>
     }
 }
